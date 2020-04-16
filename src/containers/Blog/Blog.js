@@ -10,12 +10,13 @@ class Blog extends Component {
     _isMounted = false;
     state = {
         posts: [],
-        fullPostId: null
+        fullPostId: null,
+        error: false
     }
 
     componentDidMount () {
         this._isMounted = true;
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('https://jsonplaceholder.typicode.com/postsss')
         .then(response => {
             const posts = response.data.slice(0,4);
             const updatedPosts = posts.map(post => {
@@ -27,6 +28,14 @@ class Blog extends Component {
             if (this._isMounted) {
                 this.setState({
                     posts: updatedPosts
+                })
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            if (this._isMounted) {
+                this.setState({
+                    error: true
                 })
             }
         })
@@ -50,13 +59,16 @@ class Blog extends Component {
         })
     }
     render () {
-        const posts = this.state.posts.map(post => {
+        let posts = this.state.posts.map(post => {
             return <Post 
                     title = {post.title}  
                     key = {post.id} 
                     author = {post.author} 
                     clicked = {() => {this.clickHandler(post.id)}}/>
         });
+        if (this.state.error) {
+            posts = (<p style = {{textAlign: 'center'}}>something Went Wrong !!!</p>)
+        }
         
         return (
             <div>
