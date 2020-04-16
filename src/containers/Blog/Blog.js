@@ -9,28 +9,53 @@ import axios from 'axios';
 class Blog extends Component {
     _isMounted = false;
     state = {
-        posts: []
+        posts: [],
+        fullPostId: null
     }
 
     componentDidMount () {
         this._isMounted = true;
         axios.get('https://jsonplaceholder.typicode.com/posts')
         .then(response => {
-            
+            const posts = response.data.slice(0,4);
+            const updatedPosts = posts.map(post => {
+                return {
+                    ...post,
+                    author: 'Max'
+                }
+            })
             if (this._isMounted) {
                 this.setState({
-                    posts: response.data
+                    posts: updatedPosts
                 })
             }
-            console.log(response)
         })
     }
     componentWillUnmount() {
         this._isMounted = false;
     }
+
+    clickHandler = (id) => {
+        this.setState({
+            fullPostId: id
+        })
+    }
+    deletePostHandler = () => {
+        axios.delete('https://jsonplaceholder.typicode.com/posts/'+ this.state.fullPostId)
+        .then(res => {
+            console.log(res)
+        })
+        this.setState({
+            fullPostId: null
+        })
+    }
     render () {
         const posts = this.state.posts.map(post => {
-            return <Post title = {post.title}  key = {post.id}/>
+            return <Post 
+                    title = {post.title}  
+                    key = {post.id} 
+                    author = {post.author} 
+                    clicked = {() => {this.clickHandler(post.id)}}/>
         });
         
         return (
@@ -39,7 +64,10 @@ class Blog extends Component {
                     {posts}
                 </section>
                 <section>
-                    <FullPost />
+                    <FullPost 
+                    fullPost = {this.state.fullPostId}
+                    delete = {this.deletePostHandler}
+                    />
                 </section>
                 <section>
                     <NewPost />
