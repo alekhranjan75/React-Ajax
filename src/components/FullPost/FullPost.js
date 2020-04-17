@@ -10,7 +10,7 @@ class FullPost extends Component {
     componentDidUpdate () {
         if (this.props.fullPost) {
             if (!this.state.loadedPost || (this.state.loadedPost && this.state.loadedPost.id !== this.props.fullPost)) {
-                axios.get('https://jsonplaceholder.typicode.com/posts/' + this.props.fullPost)
+                axios.get('/posts/' + this.props.fullPost)
                 .then(response => {
                     // console.log(response.data)
                     this.setState({

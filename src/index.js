@@ -4,6 +4,7 @@ import './index.css'
 import App from './App';
 import axios from 'axios'
 
+axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
 axios.interceptors.request.use(req => {
     console.log(req)
     //Edit request here

@@ -16,7 +16,7 @@ class Blog extends Component {
 
     componentDidMount () {
         this._isMounted = true;
-        axios.get('https://jsonplaceholder.typicode.com/posts')
+        axios.get('/posts')
         .then(response => {
             const posts = response.data.slice(0,4);
             const updatedPosts = posts.map(post => {
@@ -50,7 +50,7 @@ class Blog extends Component {
         })
     }
     deletePostHandler = () => {
-        axios.delete('https://jsonplaceholder.typicode.com/posts/'+ this.state.fullPostId)
+        axios.delete('/posts/'+ this.state.fullPostId)
         .then(res => {
             console.log(res)
         })
