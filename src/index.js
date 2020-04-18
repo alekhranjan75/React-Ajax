@@ -6,19 +6,19 @@ import axios from 'axios'
 
 axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
 axios.interceptors.request.use(req => {
-    console.log(req)
+    // console.log(req)
     //Edit request here
     return req
 }, err => {
-    console.log(err)
+    // console.log(err)
     return Promise.reject(err)
 })
 
 axios.interceptors.response.use(res => {
-    console.log(res)
+    // console.log(res)
     return res
 },err =>{
-    console.log(err)
+    // console.log(err)
     return Promise.reject(err)
 })
 
