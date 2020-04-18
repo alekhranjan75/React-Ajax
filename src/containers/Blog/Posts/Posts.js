@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import Post from '../../../components/Post/Post'
 import axios from 'axios'
 import './Posts.css'
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import FullPost from '../FullPost/FullPost'
 
 class Posts extends Component {
     _isMounted = false;
     state = {
         posts: [],
-        fullPostId: null,
-        error: false
     }
 
     componentDidMount() {
@@ -44,28 +43,31 @@ class Posts extends Component {
     }
 
     clickHandler = (id) => {
-        this.setState({
-            fullPostId: id
-        })
+        this.props.history.push({pathname: '/' + id})
     }
     render() {
         let posts = this.state.posts.map(post => {
             return(
-                <Link to = {'/'+ post.id} key = {post.id} >
+                // <Link to = {'/'+ post.id} key = {post.id} >
                     <Post 
+                    key = {post.id}
                     title = {post.title}  
                     author = {post.author} 
                     clicked = {() => {this.clickHandler(post.id)}}/>
-                </Link>
+                // </Link>
             ) 
         });
         if (this.state.error) {
             posts = (<p style = {{textAlign: 'center'}}>something Went Wrong !!!</p>)
         }
         return (
-            <section className="Posts">
+            <div>
+                <section className="Posts">
                     {posts}
-            </section>
+                </section>
+                <Route path = "/:id" exact component = {FullPost}/>
+            </div>
+           
         )
 
     }

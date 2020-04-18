@@ -25,12 +25,13 @@ class Blog extends Component {
                 </header>
                 {/* <Route path = '/' render = {()=> <h1>Home</h1>} />
                 <Route path = '/' render = {()=> <h1>Home 2</h1>}/> */}
-                <Route path = "/" exact component = {Posts}/>
+                
                 <Switch>
                     <Route exact path = '/new-post' >
                         <NewPost />
                     </ Route>
-                    <Route path = "/:id" exact component = {FullPost}/>
+                    <Route path = "/"  component = {Posts}/>
+                    {/* <Route path = "/:id" exact component = {FullPost}/> */}
                 </Switch>
                 
                 {/* <Route path="/new-post" exact render = {()=> <h1>Home</h1>}/> */}
