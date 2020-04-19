@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Route, NavLink, Switch} from 'react-router-dom'
+import {Route, NavLink, Switch, Redirect} from 'react-router-dom'
 import './Blog.css';
 import axios from 'axios';
 import Posts from './Posts/Posts';
@@ -14,7 +14,7 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><NavLink to = '/' exact>Home</NavLink></li>
+                            <li><NavLink to = '/posts' exact>Home</NavLink></li>
                             <li><NavLink to = {{
                                 pathname: '/new-post',
                                 hash: '#submit',
@@ -30,7 +30,8 @@ class Blog extends Component {
                     <Route exact path = '/new-post' >
                         <NewPost />
                     </ Route>
-                    <Route path = "/"  component = {Posts}/>
+                    <Route path = "/posts"  component = {Posts}/>
+                    <Redirect from= '/' to='/posts'/>
                     {/* <Route path = "/:id" exact component = {FullPost}/> */}
                 </Switch>
                 

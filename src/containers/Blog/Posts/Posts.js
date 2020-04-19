@@ -43,7 +43,7 @@ class Posts extends Component {
     }
 
     clickHandler = (id) => {
-        this.props.history.push({pathname: '/' + id})
+        this.props.history.push({pathname: '/posts/' + id})
     }
     render() {
         let posts = this.state.posts.map(post => {
@@ -65,7 +65,7 @@ class Posts extends Component {
                 <section className="Posts">
                     {posts}
                 </section>
-                <Route path = "/:id" exact component = {FullPost}/>
+                <Route path = {this.props.match.url + "/:id"} exact component = {FullPost}/>
             </div>
            
         )
