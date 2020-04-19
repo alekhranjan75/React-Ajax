@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 
 import {Route, NavLink, Switch, Redirect} from 'react-router-dom'
 import './Blog.css';
-import axios from 'axios';
+// import axios from 'axios';
 import Posts from './Posts/Posts';
-import NewPost from '../Blog/NewPost/NewPost'
-import FullPost from './FullPost/FullPost';
+// import NewPost from '../Blog/NewPost/NewPost'
 
+const NewPost = React.lazy(() => import('../Blog/NewPost/NewPost'))
 class Blog extends Component {  
     state = {
-        auth: false
+        auth: true
     }
     render () {        
         return (
@@ -30,14 +30,16 @@ class Blog extends Component {
                 <Route path = '/' render = {()=> <h1>Home 2</h1>}/> */}
                 
                 <Switch>
-                    {/* Routing to a page if "auth" is true */}
-                    {this.state.auth ?<Route exact path = '/new-post' >
-                        <NewPost />
-                    </ Route>: null}
+                    <Suspense fallback = {<div>Loading...</div>}>
+                        {/* Routing to a page if "auth" is true */}
+                        {this.state.auth ?<Route exact path = '/new-post'component = {NewPost}/>:null}
+                    </Suspense>
+                    {/* Routing to a page if "auth" is true
+                    {this.state.auth ?<Route exact path = '/new-post'component = {NewPost}/>:null} */}
                     <Route path = "/posts"  component = {Posts}/>
                     {/* This will automatically render the below if no such route is specified with  */}
-                    <Route render = {() => <h1>Page Not Found!</h1>} />
-                    {/* <Redirect from= '/' to='/posts'/> */}
+                    {/* <Route render = {() => <h1>Page Not Found!</h1>} /> */}
+                    <Redirect from= '/' to='/posts'/>
                     {/* <Route path = "/:id" exact component = {FullPost}/> */}
                 </Switch>
                 
