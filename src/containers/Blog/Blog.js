@@ -8,6 +8,9 @@ import NewPost from '../Blog/NewPost/NewPost'
 import FullPost from './FullPost/FullPost';
 
 class Blog extends Component {  
+    state = {
+        auth: false
+    }
     render () {        
         return (
             <div className = "Blog">
@@ -27,11 +30,14 @@ class Blog extends Component {
                 <Route path = '/' render = {()=> <h1>Home 2</h1>}/> */}
                 
                 <Switch>
-                    <Route exact path = '/new-post' >
+                    {/* Routing to a page if "auth" is true */}
+                    {this.state.auth ?<Route exact path = '/new-post' >
                         <NewPost />
-                    </ Route>
+                    </ Route>: null}
                     <Route path = "/posts"  component = {Posts}/>
-                    <Redirect from= '/' to='/posts'/>
+                    {/* This will automatically render the below if no such route is specified with  */}
+                    <Route render = {() => <h1>Page Not Found!</h1>} />
+                    {/* <Redirect from= '/' to='/posts'/> */}
                     {/* <Route path = "/:id" exact component = {FullPost}/> */}
                 </Switch>
                 
